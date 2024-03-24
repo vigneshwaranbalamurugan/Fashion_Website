@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+    text-decoration: none;
+    border: 0;
+    outline: 0;
+}
+
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+    --color-hover: #2596e6;
+    --color-grey-555: #555;
+}
+
+.flex {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* ----------------Header-------------------- */
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: 2px 2px 10px -9px var(--color-black);
+    padding: 0 10%;
+}
+
+nav .top_navbar_items,
+.bootom_navbar_items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.top_navbar_items .logo_div img {
+    width: 5rem;
+}
+
+.serach_field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid var(--color-hover);
+    width: 60%;
+    padding: 0 1rem;
+    border-radius: 4px;
+}
+
+.serach_field .sicon {
+    font-size: 1.4rem;
+    color: var(--color-grey-555);
+}
+
+.serach_field input {
+    border: 0;
+    padding: 0.6rem 0;
+    width: 100%;
+    outline: 0;
+}
+
+.user_account_field {
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.profile .picon {
+    font-size: 2rem;
+    color: var(--color-grey-555);
+}
+
+.pd {
+    font-size: 0.8rem;
+}
+
+
+.bootom_navbar_items {
+    padding: 1rem 0;
+}
+
+.bootom_navbar_items ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 60%;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--color-grey-555);
+}
+
+.bootom_navbar_items ul li:hover {
+    color: var(--color-hover);
+}
+
+
+
+
+
+
+
+/* ----------------Home------------------------------ */
+
+.swipper_field {
+    color: var(--color-white);
+    padding: 0 10%;
+    position: relative;
+    width: 100%;
+    height: 80vb;
+}
+
+.details-about {
+    font-size: 3vw;
+}
+
+.image_container img {
+    width: 100%;
+}
+
+.shop_now {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    color: var(--color-white);
+    border-bottom: 1px solid var(--color-white);
+    cursor: pointer;
+}
+
+.next-prev-buttons {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    justify-content: space-between;
+    font-size: 2.5rem;
+    color: var(--color-black);
+    width: 100%;
+    transform: translate(-50%, -50%);
+    padding: 0 1.5rem;
+}
+
+.prev-icon,.next-icon {
+    background: var(--color-white);
+    padding: 0.4rem;
+    border-radius: 35rem;
+    box-shadow: 2px 2px 10px -2px var(--color-black);
+    cursor: pointer;
+}
+
+
+
+/* ---------------------sections----------------------- */
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 10%;
+    width: 100%;
+}
+
+.categorys_items {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.cate_img_field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 2px solid #eaeaea;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.cate_img_field:hover {
+    box-shadow: 0 0 10px -3px var(--color-black);
+    scale: 1.04;
+    border:2px solid transparent;
+}
+
+.cate_img_field img {
+    width: 100%;
+}
+
+
+
+
+
+/* --------------------shoes------------------------ */
+
+.left_section,.right_sections{
+    width: 100%;
+    position: relative;
+}
+
+.right_sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.right_sections .shoes_field {
+    display: flex;
+    gap: 1rem;
+}
+
+.shoes_field div {
+    border-radius: 10px;
+    padding: 1rem;
+    border: 2px solid #eaeaea;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.right_sections img{
+    width: 100%;
+}
+
+
+.left_section .bg_div{
+    width: 50%;
+    background: linear-gradient(to left top,#FC7474,#FF5AA9);
+    height: 100%;
+}
+
+.bg_div img {
+    width: 100%;
+    position: absolute;
+    top: 60%;
+    transform: translate(-50%,-50%);
+    left: 50%;
+}
+
+
+
+/* ------------------offer-section---------------- */
+
+.offer-banner {
+    width: 100%;
+    background: url('./components/assets/banner1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 5% 10%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 2vw;
+}
+
+.offer-banner h1 {
+    font-size: 10vw;
+}
+
+
+
+/* ---------------------top_products--------------------- */
+
+.offer_section{
+    padding: 0 10%;
+}
+
+.offer_section .categorys_items {
+    background: #EFF1F5;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    width: 100%;
+}
+
+@media (max-width: 1130px){
+    .offer_section .categorys_items {
+    grid-template-columns: repeat(3,1fr);
+    }
+}
+@media (max-width: 800px){
+    .offer_section .categorys_items {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+.product_card {
+    background: var(--color-white);
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px -7px var(--color-black);
+    cursor: pointer;
+}
+
+.product_card img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product_details .cost {
+    color: var(--color-hover);
+}
+
+
+@media (max-width:800px){
+  section {
+    padding: 2rem 15px !important;
+  }
+  .categorys .categorys_items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
+    width: 100%;
+  }
+  .cate_img_field,.shoes_field div { 
+    padding: 5px;
+  }
+}
+
+@media (max-width:600px){
+    .swipper_field {
+        height: 63vb;
+      }
+}
+
+@media (max-width:400px){
+    .swipper_field {
+        height: 50vb;
+      }
+}
