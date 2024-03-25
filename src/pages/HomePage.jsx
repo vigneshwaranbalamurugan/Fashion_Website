@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import img1 from "../components/assets/jacket1.png";
 import img2 from "../components/assets/man1.png";
 import img3 from "../components/assets/girl1.png";
@@ -24,7 +19,17 @@ import shoe2 from "../components/assets/shoe4.png";
 import shoe3 from "../components/assets/shoe5.png";
 import shoe4 from "../components/assets/shoe6.png";
 
-import Products from "../components/data.js";
+import perfume1 from "../components/assets/perfume (1).png";
+import perfume2 from "../components/assets/perfume (2).png";
+import perfume3 from "../components/assets/perfume (3).png";
+import perfume4 from "../components/assets/perfume (4).png";
+import perfume5 from "../components/assets/perfume (5).png";
+
+import {Products,Hoodies } from "../components/data.js";
+
+import hoodieMen from "../components/assets/hoodieman.png"
+
+import Banner3 from "../components/assets/banner3.png"
 
 const HomePage = () => {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
@@ -90,6 +95,7 @@ const HomePage = () => {
         </div>
       </section>
 
+
       <section className="categorys sections">
         <h2>Top Categorys</h2>
         <div className="categorys_items">
@@ -100,6 +106,7 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+
 
       <section className="shoes sections">
         <h2>Brand New Shoes</h2>
@@ -130,6 +137,7 @@ const HomePage = () => {
         </div>
       </section>
 
+
       <section className="offer-banner">
         <h1>60%</h1>
         <div>
@@ -137,6 +145,7 @@ const HomePage = () => {
           <p>Don't Miss it</p>
         </div>
       </section>
+
 
       <section className="offer_section">
         <h2>Top Collections</h2>
@@ -153,6 +162,66 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+
+
+      <section className="Hoodie-offer">
+        <img src={hoodieMen} alt=""  className="men"/>
+        <div>
+        <h1>New Hoodies Collection</h1>
+        <button className="shop_now">
+            Shop Now <FiArrowRight className="right-arrow-icons" />
+          </button>
+        </div>
+      </section>
+
+
+
+      <section className="hoodies_section">
+        <div className="categorys_items">
+          {Hoodies.map((hoodie, index) => (
+            <div className="product_card" key={index}>
+              <img src={hoodie.image} alt="" />
+              <div className="product_details">
+                <h3>Hoodies & Sweatshits</h3>
+                <p>{hoodie.detail}</p>
+                <p className="cost">{hoodie.cost}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+      <section className="shoes sections perfume_section">
+        <h2>Brand New Perfumes</h2>
+        <div className="categorys_items">
+          <div className="left_section">
+            <div className="bg_div">
+              <img src={perfume3} alt="" />
+            </div>
+          </div>
+          <div className="right_sections">
+            <div className="shoes_field">
+              <div>
+                <img src={perfume1} alt="" />
+              </div>
+              <div>
+                <img src={perfume2} alt="" />
+              </div>
+            </div>
+            <div className="shoes_field">
+              <div>
+                <img src={perfume4} alt="" />
+              </div>
+              <div>
+                <img src={perfume5} alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </main>
   );
 };
