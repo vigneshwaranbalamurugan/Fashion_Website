@@ -25,11 +25,17 @@ import perfume3 from "../components/assets/perfume (3).png";
 import perfume4 from "../components/assets/perfume (4).png";
 import perfume5 from "../components/assets/perfume (5).png";
 
-import {Products,Hoodies } from "../components/data.js";
+import { Products, Hoodies, Brands, GirlsDress } from "../components/data.js";
 
-import hoodieMen from "../components/assets/hoodieman.png"
+import hoodieMen from "../components/assets/hoodieman.png";
 
-import Banner3 from "../components/assets/banner3.png"
+import Banner3 from "../components/assets/banner3.png";
+import girlImg from "../components/assets/girlimg.png"
+import offerImg from '../components/assets/offerImg.png'
+import { MdOutlineStar } from "react-icons/md";
+import { MdOutlineStarOutline } from "react-icons/md";
+
+import { MdFavoriteBorder } from "react-icons/md";
 
 const HomePage = () => {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
@@ -95,7 +101,6 @@ const HomePage = () => {
         </div>
       </section>
 
-
       <section className="categorys sections">
         <h2>Top Categorys</h2>
         <div className="categorys_items">
@@ -106,7 +111,6 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-
 
       <section className="shoes sections">
         <h2>Brand New Shoes</h2>
@@ -137,7 +141,6 @@ const HomePage = () => {
         </div>
       </section>
 
-
       <section className="offer-banner">
         <h1>60%</h1>
         <div>
@@ -145,7 +148,6 @@ const HomePage = () => {
           <p>Don't Miss it</p>
         </div>
       </section>
-
 
       <section className="offer_section">
         <h2>Top Collections</h2>
@@ -163,18 +165,15 @@ const HomePage = () => {
         </div>
       </section>
 
-
       <section className="Hoodie-offer">
-        <img src={hoodieMen} alt=""  className="men"/>
+        <img src={hoodieMen} alt="" className="men" />
         <div>
-        <h1>New Hoodies Collection</h1>
-        <button className="shop_now">
+          <h1>New Hoodies Collection</h1>
+          <button className="shop_now">
             Shop Now <FiArrowRight className="right-arrow-icons" />
           </button>
         </div>
       </section>
-
-
 
       <section className="hoodies_section">
         <div className="categorys_items">
@@ -184,13 +183,24 @@ const HomePage = () => {
               <div className="product_details">
                 <h3>Hoodies & Sweatshits</h3>
                 <p>{hoodie.detail}</p>
-                <p className="cost">{hoodie.cost}</p>
+                <div className="cost-rating flex">
+              <span>
+              <p>{hoodie.cost}</p>
+              <p style={{textDecoration:"line-through"}}>$40</p>
+              </span>
+              <div className="rating-stars">
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStarOutline />
+              </div>
+            </div>
               </div>
             </div>
           ))}
         </div>
       </section>
-
 
       <section className="shoes sections perfume_section">
         <h2>Brand New Perfumes</h2>
@@ -201,7 +211,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="right_sections">
-            <div className="shoes_field">
+            <div className="shoes_field perfumes">
               <div>
                 <img src={perfume1} alt="" />
               </div>
@@ -209,7 +219,7 @@ const HomePage = () => {
                 <img src={perfume2} alt="" />
               </div>
             </div>
-            <div className="shoes_field">
+            <div className="shoes_field perfumes">
               <div>
                 <img src={perfume4} alt="" />
               </div>
@@ -218,6 +228,52 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+
+      <section className="special_offers">
+        <img src={offerImg} alt="" />
+        <img src={girlImg} alt="" />
+      </section>
+
+
+      <section className="girls_fashion">
+        <h1>New Arrivals</h1>
+        <div className="products-div">
+          {GirlsDress.map((dress,index) => (
+
+          <div className="product-card">
+            <img src={dress.image} alt="" />
+            <MdFavoriteBorder className='favorite-icon'/>
+            <h1>Khushal k</h1>
+            <p>{dress.detail}</p>
+            <div className="cost-rating">
+              <span>
+              <p>{dress.cost}</p>
+              <p style={{textDecoration:"line-through"}}>$40</p>
+              </span>
+              <div className="rating-stars">
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStar />
+              <MdOutlineStarOutline />
+              </div>
+            </div>
+          </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="shop_bybrand_section">
+        <h1>Shop By Brand</h1>
+        <div className="logo_field">
+          {Brands.map((logo) => (
+            <div className="logo_item">
+              <img src={logo} alt="" />
+            </div>
+          ))}
         </div>
       </section>
 
