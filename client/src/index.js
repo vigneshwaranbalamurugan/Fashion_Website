@@ -6,13 +6,15 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      {index: true, element: <HomePage />}
+      {index: true, element: <HomePage />},
+      { path: "register", element: <registerpage /> }
     ]
   }
 ])
