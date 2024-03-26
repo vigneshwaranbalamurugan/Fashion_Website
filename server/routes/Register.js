@@ -23,9 +23,9 @@ RegisterRouter.post('/request-otp', async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'Username or mobile number already exists' });
         }
-        // const verificationCode = generateVerificationCode();
-        // verificationStore.set(email, verificationCode);
-        // sendConfirmationEmail(email, verificationCode);
+        const verificationCode = generateVerificationCode();
+        verificationStore.set(email, verificationCode);
+        sendConfirmationEmail(email, verificationCode);
         res.status(201).json({ message: 'OTP sent to your Mail' });
     } catch (error) {
         console.error('Error registering user:', error);
