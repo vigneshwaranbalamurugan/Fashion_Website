@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const Register = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
@@ -18,10 +17,41 @@ const Register = () => {
   const handleEmailSend = async () => {
     if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address.');
+      setTimeout(() => {
+        setEmailError('');
+    }, 10000); 
       return;
     }
-    setIsEmailSent(true);
-    setIsOtpFieldVisible(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/auth/request-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error sending OTP');
+      }
+
+      setIsEmailSent(true);
+      setIsOtpFieldVisible(true);
+      setRegistrationMessageColor('success');
+      setRegistrationMessage('OTP sent successfully!');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000); 
+    } catch (error) {
+      setEmailError(error.message);
+      setRegistrationMessageColor('error');
+      setRegistrationMessage(error.message);
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000); 
+    }
   };
 
   const validateEmail = (email) => {
@@ -81,11 +111,14 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h2><center>SIGN UP</center></h2>
+      <h2>
+        <center>SIGN UP</center>
+      </h2>
       <div>
         <label>Email:</label>
         <input
           type="email"
+          name="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
