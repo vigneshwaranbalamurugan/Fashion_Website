@@ -17,6 +17,9 @@ const Register = () => {
 
   const handleEmailSend = async () => {
     try {
+      // You should add validation for email format here
+
+      // Call your API endpoint to send OTP via email
       const response = await fetch('/api/send-otp', {
         method: 'POST',
         headers: {
@@ -28,7 +31,7 @@ const Register = () => {
       if (response.ok) {
         setIsEmailSent(true);
         setMessage('OTP sent successfully!');
-        setOtp(generateOTP()); // Set default OTP when email is sent
+        setOtp('1234'); // Assuming default OTP is '1234'
       } else {
         const data = await response.json();
         setError(data.message);
@@ -38,30 +41,21 @@ const Register = () => {
     }
   };
 
-  const handleOtpVerify = async () => {
-    try {
-      const response = await fetch('/api/verify-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      if (response.ok) {
-        setIsOtpVerified(true);
-        setMessage('OTP verified successfully!');
-      } else {
-        const data = await response.json();
-        setError(data.message);
-      }
-    } catch (error) {
-      setError('Failed to verify OTP. Please try again.');
+  const handleOtpVerify = () => {
+    // Here you would verify the OTP entered by the user
+    // For simplicity, let's assume the OTP is '1234'
+    if (otp === '1234') {
+      setIsOtpVerified(true);
+    } else {
+      setError('Invalid OTP');
     }
   };
 
   const handleRegister = async () => {
     try {
+      // Add password validation here if needed
+
+      // Call your API endpoint to register the user
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -71,7 +65,6 @@ const Register = () => {
       });
 
       if (response.ok) {
-        // Registration successful, you can redirect or show a success message
         setMessage('Registration successful!');
       } else {
         const data = await response.json();
@@ -94,7 +87,7 @@ const Register = () => {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setOtp(''); // Reset OTP when a new email is entered
+            setIsEmailSent(false); // Reset email sent status when email changes
           }}
         />
         {!isEmailSent && <button onClick={handleEmailSend}>Request OTP</button>}

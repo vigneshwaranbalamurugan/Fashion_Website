@@ -27,10 +27,10 @@ const Header = () => {
             <ul>
                 <li>Categorys</li>
                 <li>Home</li>
-                <li>Shop</li>
-                <li>Account</li>
-                <li>Banking</li>
-                <li>Help / Serivce</li>
+                <li>Kids</li>
+                <li>Men</li>
+                <li>Women</li>
+                <li>Offers</li>
                 <li>Contact</li>
             </ul>
         </div>
