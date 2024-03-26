@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    /* font-family: "Poppins", sans-serif; */
     list-style: none;
     text-decoration: none;
     border: 0;
@@ -22,6 +24,12 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 
@@ -46,7 +54,19 @@ nav .top_navbar_items,
 }
 
 .top_navbar_items .logo_div img {
-    width: 5rem;
+    width: 4rem;
+}
+
+.bootom_navbar_items {
+    margin-top: 4.4rem;
+}
+
+.top_navbar_items {
+    position: fixed;
+    z-index: 1000;
+    padding: 0 10%;
+    background: var(--color-white);
+    box-shadow: 2px 2px 10px -8px var(--color-black);
 }
 
 .serach_field {
@@ -122,6 +142,7 @@ nav .top_navbar_items,
 
 .details-about {
     font-size: 3vw;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 .image_container img {
@@ -151,7 +172,8 @@ nav .top_navbar_items,
     padding: 0 1.5rem;
 }
 
-.prev-icon,.next-icon {
+.prev-icon,
+.next-icon {
     background: var(--color-white);
     padding: 0.4rem;
     border-radius: 35rem;
@@ -191,7 +213,7 @@ nav .top_navbar_items,
 .cate_img_field:hover {
     box-shadow: 0 0 10px -3px var(--color-black);
     scale: 1.04;
-    border:2px solid transparent;
+    border: 2px solid transparent;
 }
 
 .cate_img_field img {
@@ -204,7 +226,8 @@ nav .top_navbar_items,
 
 /* --------------------shoes------------------------ */
 
-.left_section,.right_sections{
+.left_section,
+.right_sections {
     width: 100%;
     position: relative;
 }
@@ -229,14 +252,14 @@ nav .top_navbar_items,
     align-items: center;
 }
 
-.right_sections img{
+.right_sections img {
     width: 100%;
 }
 
 
-.left_section .bg_div{
+.left_section .bg_div {
     width: 50%;
-    background: linear-gradient(to left top,#FC7474,#FF5AA9);
+    background: linear-gradient(to left top, #FC7474, #FF5AA9);
     height: 100%;
 }
 
@@ -244,7 +267,7 @@ nav .top_navbar_items,
     width: 100%;
     position: absolute;
     top: 60%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     left: 50%;
 }
 
@@ -262,37 +285,44 @@ nav .top_navbar_items,
     display: flex;
     align-items: center;
     gap: 2rem;
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .offer-banner h1 {
-    font-size: 10vw;
+    font-size: 6vw;
 }
 
 
 
 /* ---------------------top_products--------------------- */
 
-.offer_section{
+.offer_section {
     padding: 0 10%;
+    margin-top: 3rem;
 }
 
 .offer_section .categorys_items {
     background: #EFF1F5;
+    border-radius: 1rem;
     padding: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     width: 100%;
 }
 
-@media (max-width: 1130px){
+@media (max-width: 1130px) {
     .offer_section .categorys_items {
-    grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
-@media (max-width: 800px){
+
+@media (max-width: 800px) {
+    .top_navbar_items {
+        padding: 0 3%;
+    }
     .offer_section .categorys_items {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.9rem;
     }
 }
 
@@ -305,7 +335,7 @@ nav .top_navbar_items,
     cursor: pointer;
 }
 
-.product_card img{
+.product_card img {
     width: 100%;
     border-radius: 10px;
 }
@@ -315,28 +345,329 @@ nav .top_navbar_items,
 }
 
 
-@media (max-width:800px){
-  section {
-    padding: 2rem 15px !important;
-  }
-  .categorys .categorys_items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
-    width: 100%;
-  }
-  .cate_img_field,.shoes_field div { 
-    padding: 5px;
-  }
+@media (max-width:800px) {
+    section {
+        padding: 2rem 15px !important;
+    }
+
+    .categorys .categorys_items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        width: 100%;
+    }
+
+    .cate_img_field,
+    .shoes_field div {
+        padding: 5px;
+    }
 }
 
-@media (max-width:600px){
+@media (max-width:600px) {
     .swipper_field {
         height: 63vb;
-      }
+    }
 }
 
-@media (max-width:400px){
+@media (max-width:400px) {
     .swipper_field {
         height: 50vb;
-      }
+    }
+}
+
+
+
+
+/* -----------------hoodies-offer------------------------ */
+
+.Hoodie-offer {
+    background: url('./components//assets/banner4.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.Hoodie-offer div h1 {
+    font-size: 4vw;
+}
+
+.Hoodie-offer div .shop_now {
+    color: var(--color-black);
+    font-size: 1.2rem;
+}
+
+.Hoodie-offer .men {
+    width:20%;
+}
+
+
+
+
+
+
+/* -------------------hoodies_section-------------------- */
+
+.hoodies_section {
+    display: flex;
+    gap: 1rem;
+    padding: 3rem 10%;
+}
+
+.hoodies_section .categorys_items {
+    background: #EFF1F5;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1130px) {
+    .hoodies_section .categorys_items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .hoodies_section .categorys_items {
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .hoodies_section .categorys_items,.offer_section .categorys_items { 
+        font-size: 0.6rem;
+    }
+}
+
+
+
+
+/* --------------------perfume--------------------- */
+
+.perfume_section .categorys_items {
+    flex-direction: row-reverse;
+}
+
+.perfume_section .left_section {
+    display: flex;
+    justify-content: end;
+}
+
+.perfume_section .left_section .bg_div {
+    background: linear-gradient(#73c7fc,#5902f9);
+}
+
+.perfume_section .left_section .bg_div img {
+    width: 70%;
+    top: 50%;
+}
+
+.perfumes img {
+    width: 100%;
+    padding: 13%;
+}
+
+/* 
+------------------------special_offers-------------------------- */
+
+.special_offers {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to top right,#f7b1b1cc,#bbfff8db);
+    justify-content: space-around;
+}
+
+.special_offers img {
+    width: 40%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------brands------------------------ */
+
+.shop_bybrand_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    padding: 5% 10%;
+}
+
+.shop_bybrand_section .logo_field {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .shop_bybrand_section .logo_field {
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+.logo_field .logo_item {
+    box-shadow: 0 0 10px -6px var(--color-black);
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;;
+}
+
+.logo_field .logo_item img {
+    width: 100%;
+    border-radius: 0.4rem;
+}
+
+
+
+
+
+
+
+
+/* --------------------girls-fashion----------------------------- */
+
+.girls_fashion {
+    padding: 5% 10%;
+}
+
+.products-div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.product-card .favorite-icon {
+    font-size: 1.8rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--color-white);
+    padding: 0.3rem;
+    border-radius: 30rem;
+    cursor: pointer;
+
+}
+
+.product-card img {
+    width: 100%;
+}
+
+.product-card .cost-rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cost-rating span {
+    display: flex;
+    gap: 1rem;
+}
+
+.rating-stars {
+    color: var(--color-hover);
+}
+
+@media (max-width: 1130px) {
+    .products-div {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .products-div {
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.7rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------------footer------------------------- */
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    background: var(--color-black);
+    color: #999;
+    padding: 5%;
+}
+
+.top-footer-details {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 2rem;
+    cursor: pointer;
+}
+
+.top-footer-details .col ul,.column1 {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.top-footer-details .col ul li:hover {
+    color: var(--color-white);
+}
+
+.column1 {
+    margin-top: 0;
+}
+
+.icons_field ul{
+    display: flex;
+    gap: 1rem;
+    font-size: 1.4rem;
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+@media(max-width: 800px) {
+    .top-footer-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
