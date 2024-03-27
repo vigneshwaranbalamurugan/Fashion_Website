@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import { verificationStore, sendConfirmationEmail, generateVerificationCode } from '../Verification/VerifyMail.js';
+import { verificationStore, sendConfirmationEmail, generateVerificationCode, verifiedEmail } from '../Verification/VerifyMail.js';
 
 
 const databaseName = 'Fashionitems';
@@ -21,7 +21,7 @@ RegisterRouter.post('/request-otp', async (req, res) => {
 
 
         if (existingUser) {
-            return res.status(400).json({ message: 'Username or mobile number already exists' });
+            return res.status(400).json({ message: 'User is already exists in this email' });
         }
         const verificationCode = generateVerificationCode();
         verificationStore.set(email, verificationCode);
@@ -39,6 +39,7 @@ RegisterRouter.post('/verify-otp', async (req, res) => {
         const storedCode = verificationStore.get(email);
 
         if (storedCode && storedCode == otp) {
+            verifiedEmail.set(email, true);
             res.status(201).json({ message: 'Account verified!' });
             verificationStore.delete(email);
         } else {
@@ -49,4 +50,31 @@ RegisterRouter.post('/verify-otp', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
+
+RegisterRouter.post('/register', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const isverified = verifiedEmail.get(email);
+
+        if (!isverified) {
+            return res.status(400).json({message:'E-mail is not Verified yet!'});
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new user({
+            email,
+            password: hashedPassword,
+          });
+       
+        verifiedEmail.delete(email);
+        await newUser.save();
+        return res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
 export default RegisterRouter

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const verificationStore = new Map();
+const verifiedEmail = new Map();
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -36,4 +37,4 @@ const generateVerificationCode = () => {
   };
 
 
-export {verificationStore,sendConfirmationEmail,generateVerificationCode};
+export {verificationStore,sendConfirmationEmail,generateVerificationCode,verifiedEmail};

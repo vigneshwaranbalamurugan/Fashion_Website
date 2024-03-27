@@ -19,7 +19,7 @@ const Register = () => {
       setEmailError('Please enter a valid email address.');
       setTimeout(() => {
         setEmailError('');
-    }, 10000); 
+      }, 10000);
       return;
     }
 
@@ -43,14 +43,15 @@ const Register = () => {
       setRegistrationMessage('OTP sent successfully!');
       setTimeout(() => {
         setRegistrationMessage('');
-      }, 10000); 
+      }, 10000);
     } catch (error) {
       setEmailError(error.message);
       setRegistrationMessageColor('error');
       setRegistrationMessage(error.message);
       setTimeout(() => {
         setRegistrationMessage('');
-      }, 10000); 
+        setEmailError('');
+      }, 10000);
     }
   };
 
@@ -61,72 +62,132 @@ const Register = () => {
 
   const handleOtpVerify = async () => {
     try {
-        const response = await fetch('http://localhost:5000/auth/verify-otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, otp }),
+      const response = await fetch('http://localhost:5000/auth/verify-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      if (!response.ok) {
+        setIsOtpVerified(false);
+        setIsOtpMismatch(true);
+        setRegistrationMessageColor('error');
+        setRegistrationMessage('Invalid OTP');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+        return
+      }
+
+      const data = await response.json();
+
+      if (data.message === 'Account verified!') {
+        setIsOtpVerified(true);
+        setIsOtpMismatch(false);
+        setRegistrationMessage('OTP verified successfully!');
+        setRegistrationMessageColor('success');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+      } else {
+        setIsOtpVerified(false);
+        setIsOtpMismatch(true);
+        setRegistrationMessageColor('error');
+        setRegistrationMessage('Invalid OTP');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+      }
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      setRegistrationMessageColor('error');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+      setRegistrationMessage('Failed to verify OTP');
+    }
+  };
+
+  const handleRegister = async () => {
+    try {
+      if (password === confirmPassword && password !== '' && confirmPassword !== '') {
+        const response = await fetch('http://localhost:5000/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
         });
 
         if (!response.ok) {
-            throw new Error('Failed to verify OTP');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error registering user');
         }
 
-        const data = await response.json();
-
-        if (data.message === 'Account verified!') {
-            setIsOtpVerified(true);
-            setIsOtpMismatch(false);
-            setRegistrationMessage('OTP verified successfully!');
-            setRegistrationMessageColor('success');
-            setTimeout(() => {
-              setRegistrationMessage('');
-          }, 10000); 
-        } else {
-            setIsOtpVerified(false);
-            setIsOtpMismatch(true);
-            setRegistrationMessageColor('error');
-            setTimeout(() => {
-              setRegistrationMessage('');
-          }, 10000); 
-            setRegistrationMessage('Invalid OTP');
-        }
-    } catch (error) {
-        console.error('Error verifying OTP:', error);
-        setRegistrationMessageColor('error');
+        alert('Registration Successful!');
+        setRegistrationMessageColor('success');
+        setEmail('');
+        setOtp('');
+        setPassword('');
+        setConfirmPassword('');
+        setIsEmailSent(false);
+        setIsOtpFieldVisible(false);
+        setIsOtpVerified(false);
+        setIsOtpMismatch(false);
+        setPasswordMatch(true);
+      } else {
+        setPasswordMatch(false);
+        setRegistrationMessage('Password must match and be non-empty');
         setTimeout(() => {
           setRegistrationMessage('');
-      }, 10000); 
-        setRegistrationMessage('Failed to verify OTP');
-    }
-};
-  
-  const handleRegister = async () => {
-    if (password === confirmPassword) {
-      alert('Registration Successful!');
-      
-      setRegistrationMessageColor('success');
-      setEmail('');
-      setOtp('');
-      setPassword('');
-      setConfirmPassword('');
-      setIsEmailSent(false);
-      setIsOtpFieldVisible(false);
-      setIsOtpVerified(false);
-      setIsOtpMismatch(false);
-      setPasswordMatch(true);
-    } else {
-      setPasswordMatch(false);
-      setRegistrationMessage('Password do not match.');
+        }, 10000);
+        setRegistrationMessageColor('error');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      setRegistrationMessage(error.message);
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
       setRegistrationMessageColor('error');
     }
   };
 
-  const handleResendOTP = () => {
-    setOtp('');
-    setIsOtpMismatch(false);
-  };
+
+  const handleResendOTP = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/auth/request-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error sending OTP');
+        }
+
+        setOtp('');
+        setIsOtpMismatch(false);
+        setRegistrationMessage('OTP resent successfully!');
+        setRegistrationMessageColor('success');
+        setTimeout(() => {
+            setRegistrationMessage('');
+        }, 10000);
+    } catch (error) {
+        console.error('Error resending OTP:', error);
+        setRegistrationMessage(error.message);
+        setRegistrationMessageColor('error');
+        setTimeout(() => {
+            setRegistrationMessage('');
+        }, 10000); 
+    }
+};
+
 
   const handleConfirmPasswordChange = (e) => {
     const confirmPasswordValue = e.target.value;
@@ -148,12 +209,13 @@ const Register = () => {
         <input
           type="email"
           name="email"
+          id="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
             setEmailError('');
           }}
-          disabled={isOtpVerified||isEmailSent}
+          readOnly={isOtpVerified || isEmailSent}
         />
         {emailError && <p className="error">{emailError}</p>}
         {!isEmailSent && <button onClick={handleEmailSend}>Request OTP</button>}
@@ -184,6 +246,7 @@ const Register = () => {
           <label>Password:</label>
           <input
             type="password"
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
