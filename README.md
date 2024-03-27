@@ -17,26 +17,26 @@ Before running this application, ensure that you have the following installed on
 ## Getting Started
 
 1. **Clone the Repository**:
-git clone https://github.com/vigneshwaranbalamurugan/Fashion_Website
+   git clone https://github.com/vigneshwaranbalamurugan/Fashion_Website
 
 3. **Install Dependencies**:
 
-Navigate to the project directory and run:
+  Navigate to the project directory and run:
 
-cd fashion-website
-npm install
+  cd fashion-website
+  npm install
 
 3. **Set Up Environment Variables**:
 
-Create a `.env` file in the root directory and define the following variables:
-
-PORT=3000
-MONGODB_URI=your_mongodb_uri
+  Create a `.env` file in the root directory and define the following variables:
+  
+  PORT=3000
+  MONGODB_URI=your_mongodb_uri
 
 
 4. **Run the Application**:
 
-npm start
+  npm start
 
 
 ## Technologies Used
@@ -52,11 +52,7 @@ npm start
 
 ## Contributing
 
-Contributions are welcome! Feel free to fork the repository, make changes, and submit pull requests.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+  Contributions are welcome! Feel free to fork the repository, make changes, and submit pull requests.
 
 ## Acknowledgements
 
@@ -64,4 +60,4 @@ Special thanks to all contributors and the open-source community for their inval
 
 ## Contact
 
-For any inquiries or support, please contact [your email address].
+For any inquiries or support, please contact [vigneshsobalamurugan2005@gmail.com].
