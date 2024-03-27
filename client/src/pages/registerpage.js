@@ -59,20 +59,49 @@ const Register = () => {
     return re.test(email);
   };
 
-  const handleOtpVerify = () => {
-    if (otp === '1234') {
-      setIsOtpVerified(true);
-      setIsOtpMismatch(false);
-      setRegistrationMessage('OTP verified successfully!');
-      setRegistrationMessageColor('success');
-    } else {
-      setIsOtpVerified(false);
-      setIsOtpMismatch(true);
-      
-      setRegistrationMessageColor('error');
-    }
-  };
+  const handleOtpVerify = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/auth/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, otp }),
+        });
 
+        if (!response.ok) {
+            throw new Error('Failed to verify OTP');
+        }
+
+        const data = await response.json();
+
+        if (data.message === 'Account verified!') {
+            setIsOtpVerified(true);
+            setIsOtpMismatch(false);
+            setRegistrationMessage('OTP verified successfully!');
+            setRegistrationMessageColor('success');
+            setTimeout(() => {
+              setRegistrationMessage('');
+          }, 10000); 
+        } else {
+            setIsOtpVerified(false);
+            setIsOtpMismatch(true);
+            setRegistrationMessageColor('error');
+            setTimeout(() => {
+              setRegistrationMessage('');
+          }, 10000); 
+            setRegistrationMessage('Invalid OTP');
+        }
+    } catch (error) {
+        console.error('Error verifying OTP:', error);
+        setRegistrationMessageColor('error');
+        setTimeout(() => {
+          setRegistrationMessage('');
+      }, 10000); 
+        setRegistrationMessage('Failed to verify OTP');
+    }
+};
+  
   const handleRegister = async () => {
     if (password === confirmPassword) {
       alert('Registration Successful!');
@@ -124,6 +153,7 @@ const Register = () => {
             setEmail(e.target.value);
             setEmailError('');
           }}
+          disabled={isOtpVerified||isEmailSent}
         />
         {emailError && <p className="error">{emailError}</p>}
         {!isEmailSent && <button onClick={handleEmailSend}>Request OTP</button>}
@@ -133,6 +163,7 @@ const Register = () => {
           <label>OTP:</label>
           <input
             type="text"
+            name="otp"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
           />

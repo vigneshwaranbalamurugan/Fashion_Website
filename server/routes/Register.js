@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { verificationStore, sendConfirmationEmail, generateVerificationCode } from '../Verification/VerifyMail.js';
@@ -33,5 +33,20 @@ RegisterRouter.post('/request-otp', async (req, res) => {
     }
 })
 
+RegisterRouter.post('/verify-otp', async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        const storedCode = verificationStore.get(email);
 
+        if (storedCode && storedCode == otp) {
+            res.status(201).json({ message: 'Account verified!' });
+            verificationStore.delete(email);
+        } else {
+            res.status(400).send('Invalid verification code');
+        }
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
 export default RegisterRouter
