@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -6,92 +8,296 @@ const Register = () => {
   const [isOtpFieldVisible, setIsOtpFieldVisible] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [isOtpMismatch, setIsOtpMismatch] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [emailError, setEmailError] = useState('');
+  const [registrationMessage, setRegistrationMessage] = useState('');
+  const [registrationMessageColor, setRegistrationMessageColor] = useState('');
+  const [showPassword, setShowPassword] = useState(false); 
+  const [cshowPassword, csetShowPassword] = useState(false);
 
   const handleEmailSend = async () => {
-    // Send email and request OTP
-    // Assuming API call is made here
-    // After successful request:
-    setIsEmailSent(true);
-    setIsOtpFieldVisible(true);
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      setTimeout(() => {
+        setEmailError('');
+      }, 10000);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/auth/request-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error sending OTP');
+      }
+
+      setIsEmailSent(true);
+      setIsOtpFieldVisible(true);
+      setRegistrationMessageColor('success');
+      setRegistrationMessage('OTP sent successfully!');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+    } catch (error) {
+      setEmailError(error.message);
+      setRegistrationMessageColor('error');
+      setRegistrationMessage(error.message);
+      setTimeout(() => {
+        setRegistrationMessage('');
+        setEmailError('');
+      }, 10000);
+    }
   };
 
-  const handleOtpVerify = () => {
-    // Verify the entered OTP
-    // For simplicity, let's assume the default OTP is '1234'
-    if (otp === '1234') {
-      setIsOtpVerified(true);
-    } else {
-      setIsOtpVerified(false);
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const handleOtpVerify = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/auth/verify-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      if (!response.ok) {
+        setIsOtpVerified(false);
+        setIsOtpMismatch(true);
+        setRegistrationMessageColor('error');
+        setRegistrationMessage('Invalid OTP');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+        return
+      }
+
+      const data = await response.json();
+
+      if (data.message === 'Account verified!') {
+        setIsOtpVerified(true);
+        setIsOtpMismatch(false);
+        setRegistrationMessage('OTP verified successfully!');
+        setRegistrationMessageColor('success');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+      } else {
+        setIsOtpVerified(false);
+        setIsOtpMismatch(true);
+        setRegistrationMessageColor('error');
+        setRegistrationMessage('Invalid OTP');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+      }
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      setRegistrationMessageColor('error');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+      setRegistrationMessage('Failed to verify OTP');
     }
   };
 
   const handleRegister = async () => {
-    // Handle user registration
-    // Assuming API call is made here
-    // Upon successful registration:
-    alert('Registration Successful!');
-    // Reset form fields
-    setEmail('');
-    setOtp('');
-    setPassword('');
-    setConfirmPassword('');
-    setIsEmailSent(false);
-    setIsOtpFieldVisible(false);
-    setIsOtpVerified(false);
+    try {
+      if (password === confirmPassword && password !== '' && confirmPassword !== '') {
+        const response = await fetch('http://localhost:5000/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error registering user');
+        }
+
+        alert('Registration Successful!');
+        setRegistrationMessageColor('success');
+        setEmail('');
+        setOtp('');
+        setPassword('');
+        setConfirmPassword('');
+        setIsEmailSent(false);
+        setIsOtpFieldVisible(false);
+        setIsOtpVerified(false);
+        setIsOtpMismatch(false);
+        setPasswordMatch(true);
+      } else {
+        setPasswordMatch(false);
+        setRegistrationMessage('Password must match and be non-empty');
+        setTimeout(() => {
+          setRegistrationMessage('');
+        }, 10000);
+        setRegistrationMessageColor('error');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      setRegistrationMessage(error.message);
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+      setRegistrationMessageColor('error');
+    }
   };
 
-  const handleResendOTP = () => {
-    // Resend OTP
-    // Assuming API call is made here
-    // After successful resend:
-    setOtp('');
+
+  const handleResendOTP = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/auth/request-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error sending OTP');
+      }
+
+      setOtp('');
+      setIsOtpMismatch(false);
+      setRegistrationMessage('OTP resent successfully!');
+      setRegistrationMessageColor('success');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      setRegistrationMessage(error.message);
+      setRegistrationMessageColor('error');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
+    }
+  };
+
+
+  const handleConfirmPasswordChange = (e) => {
+    const confirmPasswordValue = e.target.value;
+    setConfirmPassword(confirmPasswordValue);
+    if (password !== confirmPasswordValue) {
+      setPasswordMatch(false);
+    } else {
+      setPasswordMatch(true);
+    }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="register-container">
+      <h2>
+        <center>SIGN UP</center>
+      </h2>
       <div>
         <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="input-with-icon">
+          <i><FaEnvelope /></i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+            }}
+            readOnly={isOtpVerified || isEmailSent}
+          />
+        </div>
+        {emailError && <p className="error">{emailError}</p>}
         {!isEmailSent && <button onClick={handleEmailSend}>Request OTP</button>}
       </div>
-      {isOtpFieldVisible && (
+      {isOtpFieldVisible && !isOtpVerified && (
         <div>
           <label>OTP:</label>
-          <input
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+              type="text"
+              name="otp"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+          </div>
           <button onClick={handleOtpVerify}>Verify OTP</button>
+          {isOtpMismatch && (
+            <p className="error">
+              OTP mismatch. Please try again or click{' '}
+              <button onClick={handleResendOTP}>Resend OTP</button>.
+            </p>
+          )}
         </div>
       )}
+      <p className={`registration-message ${registrationMessageColor}`}>
+        {registrationMessage}
+      </p>
       {isOtpVerified && (
         <div>
-          <p>OTP verified successfully!</p>
           <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FaEyeSlash
+              className={`eye-icon ${showPassword ? 'hidden' : ''}`}
+              onClick={() => setShowPassword(!showPassword)}
+            />
+
+            <FaEye
+              className={`eye-icon ${showPassword ? '' : 'hidden'}`}
+              onClick={() => setShowPassword(!showPassword)}
+            />
+
+          </div>
           <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <button onClick={handleRegister}>Register</button>
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+            type={cshowPassword ? 'text' : 'password'}
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              style={{ borderColor: passwordMatch ? '' : 'red' }}
+            />
+            <FaEyeSlash
+              className={`eye-icon ${cshowPassword ? 'hidden' : ''}`}
+              onClick={() => csetShowPassword(!cshowPassword)}
+            />
+
+            <FaEye
+              className={`eye-icon ${cshowPassword ? '' : 'hidden'}`}
+              onClick={() => csetShowPassword(!cshowPassword)}
+            />
+
+          </div>
+          {!passwordMatch && <p className="error">Password do not match.</p>}
+          <button onClick={handleRegister} disabled={!passwordMatch}>
+            Register
+          </button>
         </div>
-      )}
-      {!isOtpVerified && isOtpFieldVisible && (
-        <button onClick={handleResendOTP}>Resend OTP</button>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
 import Register from './pages/registerpage';
+import SignIn from './pages/signinpage';
 
 
 const router = createBrowserRouter([
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {index: true, element: <HomePage />},
-      { path: "Register", element: <Register /> }
+      { path: "Register", element: <Register /> },
+      { path: "SignIn", element: <SignIn /> },
     ]
   }
 ])
