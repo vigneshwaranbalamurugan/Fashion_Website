@@ -184,18 +184,18 @@ const HomePage = () => {
                 <h3>Hoodies & Sweatshits</h3>
                 <p>{hoodie.detail}</p>
                 <div className="cost-rating flex">
-              <span>
-              <p>{hoodie.cost}</p>
-              <p style={{textDecoration:"line-through"}}>$40</p>
-              </span>
-              <div className="rating-stars">
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStarOutline />
-              </div>
-            </div>
+                  <span>
+                    <p>{hoodie.cost}</p>
+                    <p style={{ textDecoration: "line-through" }}>$40</p>
+                  </span>
+                  <div className="rating-stars">
+                    <MdOutlineStar />
+                    <MdOutlineStar />
+                    <MdOutlineStar />
+                    <MdOutlineStar />
+                    <MdOutlineStarOutline />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -241,27 +241,27 @@ const HomePage = () => {
       <section className="girls_fashion">
         <h1>New Arrivals</h1>
         <div className="products-div">
-          {GirlsDress.map((dress,index) => (
+          {GirlsDress.map((dress, index) => (
 
-          <div className="product-card">
-            <img src={dress.image} alt="" />
-            <MdFavoriteBorder className='favorite-icon'/>
-            <h1>Khushal k</h1>
-            <p>{dress.detail}</p>
-            <div className="cost-rating">
-              <span>
-              <p>{dress.cost}</p>
-              <p style={{textDecoration:"line-through"}}>$40</p>
-              </span>
-              <div className="rating-stars">
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStar />
-              <MdOutlineStarOutline />
+            <div className="product-card">
+              <img src={dress.image} alt="" />
+              <MdFavoriteBorder className='favorite-icon' />
+              <h1>Khushal k</h1>
+              <p>{dress.detail}</p>
+              <div className="cost-rating">
+                <span>
+                  <p>{dress.cost}</p>
+                  <p style={{ textDecoration: "line-through" }}>$40</p>
+                </span>
+                <div className="rating-stars">
+                  <MdOutlineStar />
+                  <MdOutlineStar />
+                  <MdOutlineStar />
+                  <MdOutlineStar />
+                  <MdOutlineStarOutline />
+                </div>
               </div>
             </div>
-          </div>
           ))}
         </div>
       </section>
