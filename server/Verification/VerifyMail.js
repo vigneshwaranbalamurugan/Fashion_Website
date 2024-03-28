@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const verificationStore = new Map();
 const verifiedEmail = new Map();
@@ -6,8 +9,8 @@ const verifiedEmail = new Map();
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'vigneshsobalamurugan2005@gmail.com', 
-      pass: 'fsum hfnq rlns oyms',
+      user:`${process.env.user}`, 
+      pass: `${process.env.pass}`,
     },
   });
 
