@@ -680,7 +680,7 @@ footer {
     margin: 10rem auto;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .register-container input[type="email"],
@@ -689,22 +689,22 @@ footer {
     width: 100%;
     margin-bottom: 15px;
     padding: 12px;
+    padding-left: 40px; /* Adjust as needed for icon */
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 13px;
-    transition: border-color 0.3s ease; /* Add transition effect for border */
+    transition: border-color 0.3s ease;
   }
   
   .register-container input[type="email"]:focus,
   .register-container input[type="text"]:focus,
   .register-container input[type="password"]:focus {
     outline: none;
-    border-color: #007bff; /* Change border color on focus */
+    border-color: #007bff;
   }
-
-
-  .register-container label{
+  
+  .register-container label {
     font-size: 15px;
   }
   
@@ -716,26 +716,55 @@ footer {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.3s ease; /* Add transition effect for background color */
+    transition: background-color 0.3s ease;
   }
   
   .register-container button:hover {
-    background-color: #0056b3; /* Change background color on hover */
-  }
-
-  .registration-message {
-    text-align: center;
-    font-weight: bold;
+    background-color: #0056b3;
   }
   
+  .input-with-icon {
+    position: relative;
+  }
+  
+  .input-with-icon input {
+    z-index: 1;
+  }
+  
+  .input-with-icon i {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+  }
 
-  .success {
-    color: green;
+  .hidden {
+    display: none;
   }
   
   .error {
     color: red;
   }
+  
+  .registration-message {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .success {
+    color: green;
+  }
+  
 
   /* ----------------Login Page-------------------- */
   .signin-container {

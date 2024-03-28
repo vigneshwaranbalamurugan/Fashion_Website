@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +15,8 @@ const Register = () => {
   const [emailError, setEmailError] = useState('');
   const [registrationMessage, setRegistrationMessage] = useState('');
   const [registrationMessageColor, setRegistrationMessageColor] = useState('');
+  const [showPassword, setShowPassword] = useState(false); 
+  const [cshowPassword, csetShowPassword] = useState(false);
 
   const handleEmailSend = async () => {
     if (!validateEmail(email)) {
@@ -158,35 +162,35 @@ const Register = () => {
 
   const handleResendOTP = async () => {
     try {
-        const response = await fetch('http://localhost:5000/auth/request-otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email }),
-        });
+      const response = await fetch('http://localhost:5000/auth/request-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Error sending OTP');
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error sending OTP');
+      }
 
-        setOtp('');
-        setIsOtpMismatch(false);
-        setRegistrationMessage('OTP resent successfully!');
-        setRegistrationMessageColor('success');
-        setTimeout(() => {
-            setRegistrationMessage('');
-        }, 10000);
+      setOtp('');
+      setIsOtpMismatch(false);
+      setRegistrationMessage('OTP resent successfully!');
+      setRegistrationMessageColor('success');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
     } catch (error) {
-        console.error('Error resending OTP:', error);
-        setRegistrationMessage(error.message);
-        setRegistrationMessageColor('error');
-        setTimeout(() => {
-            setRegistrationMessage('');
-        }, 10000); 
+      console.error('Error resending OTP:', error);
+      setRegistrationMessage(error.message);
+      setRegistrationMessageColor('error');
+      setTimeout(() => {
+        setRegistrationMessage('');
+      }, 10000);
     }
-};
+  };
 
 
   const handleConfirmPasswordChange = (e) => {
@@ -206,29 +210,35 @@ const Register = () => {
       </h2>
       <div>
         <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setEmailError('');
-          }}
-          readOnly={isOtpVerified || isEmailSent}
-        />
+        <div className="input-with-icon">
+          <i><FaEnvelope /></i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+            }}
+            readOnly={isOtpVerified || isEmailSent}
+          />
+        </div>
         {emailError && <p className="error">{emailError}</p>}
         {!isEmailSent && <button onClick={handleEmailSend}>Request OTP</button>}
       </div>
       {isOtpFieldVisible && !isOtpVerified && (
         <div>
           <label>OTP:</label>
-          <input
-            type="text"
-            name="otp"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+              type="text"
+              name="otp"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+          </div>
           <button onClick={handleOtpVerify}>Verify OTP</button>
           {isOtpMismatch && (
             <p className="error">
@@ -244,19 +254,45 @@ const Register = () => {
       {isOtpVerified && (
         <div>
           <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FaEyeSlash
+              className={`eye-icon ${showPassword ? 'hidden' : ''}`}
+              onClick={() => setShowPassword(!showPassword)}
+            />
+
+            <FaEye
+              className={`eye-icon ${showPassword ? '' : 'hidden'}`}
+              onClick={() => setShowPassword(!showPassword)}
+            />
+
+          </div>
           <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-            style={{ borderColor: passwordMatch ? '' : 'red' }}
-          />
+          <div className="input-with-icon">
+            <i> <FaLock /></i>
+            <input
+            type={cshowPassword ? 'text' : 'password'}
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              style={{ borderColor: passwordMatch ? '' : 'red' }}
+            />
+            <FaEyeSlash
+              className={`eye-icon ${cshowPassword ? 'hidden' : ''}`}
+              onClick={() => csetShowPassword(!cshowPassword)}
+            />
+
+            <FaEye
+              className={`eye-icon ${cshowPassword ? '' : 'hidden'}`}
+              onClick={() => csetShowPassword(!cshowPassword)}
+            />
+
+          </div>
           {!passwordMatch && <p className="error">Password do not match.</p>}
           <button onClick={handleRegister} disabled={!passwordMatch}>
             Register
