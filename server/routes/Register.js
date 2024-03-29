@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import User from "../models/User.js";
+import UserAuthSchema from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { verificationStore, sendConfirmationEmail, generateVerificationCode, verifiedEmail } from '../Verification/VerifyMail.js';
 
@@ -8,7 +8,7 @@ import { verificationStore, sendConfirmationEmail, generateVerificationCode, ver
 const databaseName = 'Fashionitems';
 const database = mongoose.connection.useDb(databaseName);
 const collectionName = 'user';
-const user = database.model(collectionName, User);
+const user = database.model(collectionName,UserAuthSchema);
 
 const RegisterRouter = express.Router();
 
