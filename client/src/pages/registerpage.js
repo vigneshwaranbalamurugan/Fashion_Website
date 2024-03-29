@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
@@ -219,6 +220,7 @@ const Register = () => {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              setEmail(e.target.value.toLowerCase())
               setEmailError('');
             }}
             readOnly={isOtpVerified || isEmailSent}
@@ -251,6 +253,9 @@ const Register = () => {
       <p className={`registration-message ${registrationMessageColor}`}>
         {registrationMessage}
       </p>
+      <div className='already-account'>
+      <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
+      </div>
       {isOtpVerified && (
         <div>
           <label>Password:</label>
@@ -298,6 +303,7 @@ const Register = () => {
             Register
           </button>
         </div>
+        
       )}
     </div>
   );
