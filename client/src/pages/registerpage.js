@@ -28,7 +28,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/auth/request-otp', {
+      const response = await fetch('auth/request-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const Register = () => {
 
   const handleOtpVerify = async () => {
     try {
-      const response = await fetch('http://localhost:5000/auth/verify-otp', {
+      const response = await fetch('auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ const Register = () => {
   const handleRegister = async () => {
     try {
       if (password === confirmPassword && password !== '' && confirmPassword !== '') {
-        const response = await fetch('http://localhost:5000/auth/register', {
+        const response = await fetch('auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ const Register = () => {
 
   const handleResendOTP = async () => {
     try {
-      const response = await fetch('http://localhost:5000/auth/request-otp', {
+      const response = await fetch('auth/request-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
