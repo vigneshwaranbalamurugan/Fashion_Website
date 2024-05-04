@@ -8,9 +8,11 @@ import { verificationStore, sendConfirmationEmail, generateVerificationCode, ver
 const databaseName = 'Fashionitems';
 const database = mongoose.connection.useDb(databaseName);
 const collectionName = 'user';
-const user = database.model(collectionName,UserAuthSchema);
+const user = database.model(collectionName, UserAuthSchema);
 
 const RegisterRouter = express.Router();
+
+/*-------------Request-OTP routing---------------*/
 
 RegisterRouter.post('/request-otp', async (req, res) => {
     try {
@@ -33,6 +35,8 @@ RegisterRouter.post('/request-otp', async (req, res) => {
     }
 })
 
+/*---------------------Verify-OTP Routing---------------------------*/
+
 RegisterRouter.post('/verify-otp', async (req, res) => {
     try {
         const { email, otp } = req.body;
@@ -51,23 +55,25 @@ RegisterRouter.post('/verify-otp', async (req, res) => {
     }
 })
 
+/*--------------------Registration-------------------*/
+
 RegisterRouter.post('/register', async (req, res) => {
     try {
         const { email, password } = req.body;
         const isverified = verifiedEmail.get(email);
 
         if (!isverified) {
-            return res.status(400).json({message:'E-mail is not Verified yet!'});
+            return res.status(400).json({ message: 'E-mail is not Verified yet!' });
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        
         const newUser = new user({
             email,
             password: hashedPassword,
-          });
-       
+        });
+
         verifiedEmail.delete(email);
         await newUser.save();
         return res.status(201).json({ message: 'User registered successfully' });
