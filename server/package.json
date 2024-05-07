@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "concurrently \"npm run start\" \"cd ../client && npm run dev\"",
+    "install": "npm i && cd ../client && npm i --production=false",
+    "build": "cd ../client && npm run build",
+    "render-build":"npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
