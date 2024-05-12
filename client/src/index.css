@@ -678,7 +678,7 @@ footer {
 .register-container {
     max-width: 500px;
     margin: 10rem auto;
-    padding: 15px;
+    padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -709,13 +709,16 @@ footer {
   }
   
   .register-container button {
-    padding: 9px 12px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: bold;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
   }
   
@@ -765,6 +768,10 @@ footer {
     color: green;
   }
   
+  .already-account{
+   padding:1rem;
+   text-align: center;
+  }
 
   /* ----------------Login Page-------------------- */
   .signin-container {

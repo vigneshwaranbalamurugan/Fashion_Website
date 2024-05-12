@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
@@ -28,7 +29,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/auth/request-otp', {
+      const response = await fetch('auth/request-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ const Register = () => {
 
   const handleOtpVerify = async () => {
     try {
-      const response = await fetch('http://localhost:5000/auth/verify-otp', {
+      const response = await fetch('auth/verify-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +118,7 @@ const Register = () => {
   const handleRegister = async () => {
     try {
       if (password === confirmPassword && password !== '' && confirmPassword !== '') {
-        const response = await fetch('http://localhost:5000/auth/register', {
+        const response = await fetch('auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -162,7 +163,7 @@ const Register = () => {
 
   const handleResendOTP = async () => {
     try {
-      const response = await fetch('http://localhost:5000/auth/request-otp', {
+      const response = await fetch('auth/request-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -219,6 +220,7 @@ const Register = () => {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              setEmail(e.target.value.toLowerCase())
               setEmailError('');
             }}
             readOnly={isOtpVerified || isEmailSent}
@@ -251,6 +253,9 @@ const Register = () => {
       <p className={`registration-message ${registrationMessageColor}`}>
         {registrationMessage}
       </p>
+      <div className='already-account'>
+      <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
+      </div>
       {isOtpVerified && (
         <div>
           <label>Password:</label>
@@ -298,6 +303,7 @@ const Register = () => {
             Register
           </button>
         </div>
+        
       )}
     </div>
   );

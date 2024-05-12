@@ -6,6 +6,8 @@ dotenv.config();
 const verificationStore = new Map();
 const verifiedEmail = new Map();
 
+/*--------------------Create Transporter-----------------------*/
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -14,8 +16,9 @@ const transporter = nodemailer.createTransport({
     },
   });
 
+/*------------------Send Mail---------------------*/
 
-  const sendConfirmationEmail = (email, verificationCode) => {
+const sendConfirmationEmail = (email, verificationCode) => {
     const mailOptions = {
       from: 'vigneshsobalamurugan2005@gmail.com',
       to: email,
@@ -34,6 +37,8 @@ const transporter = nodemailer.createTransport({
       }
     });
   };
+
+/*------------------Generating Verification code------------------------*/
 
 const generateVerificationCode = () => {
     return Math.floor(100000 + Math.random() * 900000);

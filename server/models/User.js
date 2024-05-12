@@ -4,18 +4,53 @@ const UserAuthSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    lowercase: true,
     unique: true,
   },
   password: {
     type: String,
     required: true,
-  },
-  username: {
-    type: String
+    select: false,
   },
   profile: {
-    name: String,
-    location: String,
+    name: {
+      type: String,
+      default: null,
+    },
+    gender:{
+      type:String,
+      default:null,
+    },
+    phoneNumber: {
+      type: String,
+      default:null,
+    },
+    dob:{
+      type:Date,
+      default:null,
+    },
+    address: {
+      street: {
+        type: String,
+        default: null,
+      },
+      city: {
+        type: String,
+        default: null,
+      },
+      zip: {
+        type: String,
+        default: null,
+      },
+      state: {
+        type: String,
+        default: null,
+      },
+      country: {
+        type: String,
+        default: null,
+      },
+    },
   },
   role: {
     type: String,
