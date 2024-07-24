@@ -1,0 +1,13 @@
+{
+  "name": "fashion_website",
+  "version": "1.0.0",
+  "description": "Welcome to our Fashion Items Buying and Selling Website! This project is built using the MERN stack, which stands for MongoDB, Express.js, React.js, and Node.js. This README will guide you through the setup process and provide an overview of the project structure.",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "start": "cd server && npm install && node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

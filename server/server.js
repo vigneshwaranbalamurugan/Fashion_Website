@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import core from 'cors';
 import RegisterRouter from './routes/Register.js';
+import LoginRouter from './routes/Login.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use('/auth',RegisterRouter);
+app.use('/login',LoginRouter);
 
 const __dirname = path.resolve();
 

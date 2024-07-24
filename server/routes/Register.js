@@ -20,7 +20,7 @@ RegisterRouter.post('/request-otp', async (req, res) => {
         const existingUser = await user.findOne({
             email
         });
-
+        
 
         if (existingUser) {
             return res.status(400).json({ message: 'User is already exists in this email' });

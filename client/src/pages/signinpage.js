@@ -17,11 +17,29 @@ const SignIn = () => {
     setEmailError(''); // Clear email error when user types in email field
   };
 
-  const handleSignIn = () => {
-    // Implement sign-in logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+  const handleSignIn = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const details=await response.json();
+            localStorage.setItem('userdetails', JSON.stringify(details.userdetails));
+            alert('Login successful');
+        } else {
+            const error = await response.json();
+            throw error;
+        }
+    } catch (error) {
+        console.error('Login Error:', error);
+        alert(error.message);
+    }
+};
 
   return (
     <div className="signin-container">
