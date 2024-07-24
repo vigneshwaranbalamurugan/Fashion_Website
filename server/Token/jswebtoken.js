@@ -14,7 +14,7 @@ export const generateToken = (user) => {
         expiresIn: '1h',
       }
     );
-};z
+};
 
 export const isAuth =(req,res) =>{
   const authorization = req.headers.authorization;
